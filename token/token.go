@@ -14,7 +14,7 @@ type Token struct {
 
 func (t *Token) String() string {
 	switch t.Typ {
-	case tokenNL, tokenEOF:
+	case TokenEOL, TokenEOF:
 		return fmt.Sprintf("%s at %v:%v", t.Typ, t.Line, t.Col)
 	default:
 		if len(t.Val) > 10 {

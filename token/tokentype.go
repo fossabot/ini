@@ -4,37 +4,37 @@ package token
 type TokenType int
 
 const (
-	tokenSection    TokenType = iota + 1 // [section]
-	tokenSubsection                      // [section "subsection"]
-	tokenComment                         // ; comment
-	tokenKey                             // key = value
-	tokenValue                           // key = value
-	tokenRaw                             // some content
-	tokenNL                              // \r\n or \n
-	tokenError
-	tokenEOF
+	TokenSection    TokenType = iota + 1 // [section]
+	TokenSubsection                      // [section "subsection"]
+	TokenComment                         // ; comment
+	TokenKey                             // key = value
+	TokenValue                           // key = value
+	TokenRaw                             // some content
+	TokenEOL                             // \r\n or \n
+	TokenError
+	TokenEOF
 )
 
 func (typ TokenType) String() string {
 
 	switch typ {
-	case tokenSection:
+	case TokenSection:
 		return "SEC"
-	case tokenSubsection:
+	case TokenSubsection:
 		return "SUB"
-	case tokenComment:
+	case TokenComment:
 		return "COM"
-	case tokenKey:
+	case TokenKey:
 		return "KEY"
-	case tokenValue:
+	case TokenValue:
 		return "VAL"
-	case tokenRaw:
+	case TokenRaw:
 		return "RAW"
-	case tokenNL:
-		return "NL"
-	case tokenError:
+	case TokenEOL:
+		return "EOL"
+	case TokenError:
 		return "ERROR"
-	case tokenEOF:
+	case TokenEOF:
 		return "EOF"
 	default:
 		return "UNDEFINED"

@@ -13,15 +13,15 @@ func TestTokenTypeToString(t *testing.T) {
 		str string
 	}{
 		{foo, "UNDEFINED"},
-		{tokenSection, "SEC"},
-		{tokenSubsection, "SUB"},
-		{tokenComment, "COM"},
-		{tokenKey, "KEY"},
-		{tokenValue, "VAL"},
-		{tokenRaw, "RAW"},
-		{tokenNL, "NL"},
-		{tokenError, "ERROR"},
-		{tokenEOF, "EOF"},
+		{TokenSection, "SEC"},
+		{TokenSubsection, "SUB"},
+		{TokenComment, "COM"},
+		{TokenKey, "KEY"},
+		{TokenValue, "VAL"},
+		{TokenRaw, "RAW"},
+		{TokenEOL, "EOL"},
+		{TokenError, "ERROR"},
+		{TokenEOF, "EOF"},
 		{1234, "UNDEFINED"},
 	} {
 		str := fmt.Sprintf("%s", o.typ)
