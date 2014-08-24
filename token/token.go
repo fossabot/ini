@@ -1,4 +1,4 @@
-package ini
+package token
 
 import (
 	"fmt"

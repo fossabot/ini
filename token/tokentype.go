@@ -1,4 +1,4 @@
-package ini
+package token
 
 // kinds of Tokens
 type TokenType int
