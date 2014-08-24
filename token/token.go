@@ -6,21 +6,21 @@ import (
 
 // a Token on a document
 type Token struct {
-	typ  TokenType
-	val  string
-	line uint
-	col  uint
+	Typ  TokenType
+	Val  string
+	Line uint
+	Col  uint
 }
 
 func (t *Token) String() string {
-	switch t.typ {
+	switch t.Typ {
 	case tokenNL, tokenEOF:
-		return fmt.Sprintf("%s at %v:%v", t.typ, t.line, t.col)
+		return fmt.Sprintf("%s at %v:%v", t.Typ, t.Line, t.Col)
 	default:
-		if len(t.val) > 10 {
-			return fmt.Sprintf("%s:.10%q... at %v:%v", t.typ, t.val, t.line, t.col)
+		if len(t.Val) > 10 {
+			return fmt.Sprintf("%s:.10%q... at %v:%v", t.Typ, t.Val, t.Line, t.Col)
 		} else {
-			return fmt.Sprintf("%s:%q at %v:%v", t.typ, t.val, t.line, t.col)
+			return fmt.Sprintf("%s:%q at %v:%v", t.Typ, t.Val, t.Line, t.Col)
 		}
 	}
 }
