@@ -46,6 +46,23 @@ func (l *Lexer) Run() {
 }
 
 // Emit Token
+func (l *Lexer) emitNotEmpty(typ token.TokenType) {
+	if !l.empty() {
+		l.emit(token.TokenRaw)
+	}
+}
+
+func (l *Lexer) emitBackNotEmpty(runes, bytes uint, typ token.TokenType) {
+	if !l.emptyBack(runes, bytes) {
+		l.emitBack(runes, bytes, token.TokenRaw)
+	}
+}
+func (l *Lexer) emitBack(runes, bytes uint, typ token.TokenType) {
+	l.tokens <- token.Token{typ, l.input[l.start : l.pos-bytes],
+		l.line, l.col}
+	l.start = l.pos - bytes
+	l.col += l.runes - runes
+}
 func (l *Lexer) emit(typ token.TokenType) {
 	l.tokens <- token.Token{typ, l.input[l.start:l.pos],
 		l.line, l.col}
@@ -66,6 +83,9 @@ func (l *Lexer) emitEOF() {
 // Helpers
 func (l *Lexer) empty() bool {
 	return l.start <= l.pos
+}
+func (l *Lexer) emptyBack(_, bytes uint) bool {
+	return l.start+bytes <= l.pos
 }
 
 func (l *Lexer) next() (rune, uint) {
