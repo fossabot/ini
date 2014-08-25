@@ -48,13 +48,13 @@ func (l *Lexer) Run() {
 // Emit Token
 func (l *Lexer) emitNotEmpty(typ token.TokenType) {
 	if !l.empty() {
-		l.emit(token.TokenRaw)
+		l.emit(typ)
 	}
 }
 
 func (l *Lexer) emitBackNotEmpty(runes, bytes uint, typ token.TokenType) {
 	if !l.emptyBack(runes, bytes) {
-		l.emitBack(runes, bytes, token.TokenRaw)
+		l.emitBack(runes, bytes, typ)
 	}
 }
 func (l *Lexer) emitBack(runes, bytes uint, typ token.TokenType) {
