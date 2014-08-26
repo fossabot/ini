@@ -58,14 +58,14 @@ func (l *Lexer) emitBackNotEmpty(runes, bytes uint, typ token.TokenType) {
 	}
 }
 func (l *Lexer) emitBack(runes, bytes uint, typ token.TokenType) {
-	l.tokens <- token.Token{typ, l.input[l.start : l.pos-bytes],
-		l.line, l.col}
+	l.tokens <- token.Token{typ, l.input[l.start : l.pos-bytes], l.name, l.line, l.col}
+
 	l.start = l.pos - bytes
 	l.col += l.runes - runes
 }
 func (l *Lexer) emit(typ token.TokenType) {
-	l.tokens <- token.Token{typ, l.input[l.start:l.pos],
-		l.line, l.col}
+	l.tokens <- token.Token{typ, l.input[l.start:l.pos], l.name, l.line, l.col}
+
 	l.start = l.pos
 	l.col += l.runes
 }
