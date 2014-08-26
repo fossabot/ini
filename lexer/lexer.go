@@ -42,7 +42,6 @@ func (l *Lexer) Run() {
 	for l.nextState != nil {
 		l.nextState = l.nextState(l)
 	}
-	close(l.tokens)
 }
 
 func (l *Lexer) NextToken() *token.Token {
@@ -91,6 +90,7 @@ func (l *Lexer) emitEOL() {
 
 func (l *Lexer) emitEOF() {
 	l.emit(token.TokenEOF)
+	close(l.tokens)
 }
 
 // Helpers
