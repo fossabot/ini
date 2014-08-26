@@ -45,6 +45,17 @@ func (l *Lexer) Run() {
 	close(l.tokens)
 }
 
+func (l *Lexer) NextToken() *token.Token {
+	for {
+		select {
+		case t := <-l.tokens:
+			return t
+		default:
+			l.nextState = l.nextState(l)
+		}
+	}
+}
+
 // Emit Token
 func (l *Lexer) emitNotEmpty(typ token.TokenType) {
 	if !l.empty() {
