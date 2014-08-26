@@ -5,13 +5,14 @@ import (
 )
 
 func lineLexer(l *Lexer) LexerStateFn {
+loop:
 	for {
 		r0, l0 := l.next()
 		switch r0 {
 		case EOF:
 			l.emitNotEmpty(token.TokenRaw)
 			l.emitEOF()
-			break
+			break loop
 		case '\n':
 			l.emitBackNotEmpty(1, l0, token.TokenRaw)
 			l.emitEOL()
