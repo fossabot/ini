@@ -26,23 +26,23 @@ func TestEmpty1(t *testing.T) {
 
 // Whitespace Empty
 func TestEmpty2(t *testing.T) {
-	dump(t, "Empty", `\n`)
+	dump(t, "Empty", "\n")
 }
 func TestEmpty3(t *testing.T) {
-	dump(t, "Empty", `   \n`)
+	dump(t, "Empty", "   \n")
 }
 func TestEmpty4(t *testing.T) {
-	dump(t, "Empty", `   \n\t`)
+	dump(t, "Empty", "   \n\t")
 }
 
 // Empty Preamble
 func TestPreamble1(t *testing.T) {
-	dump(t, "Preamble1", `[section1]\nkey1 = value1\n`)
+	dump(t, "Preamble1", "[section1]\nkey1 = value1\n")
 }
 
 // Whitespace Preamble
 func TestPreamble2(t *testing.T) {
-	dump(t, "Preamble2", `\n\t\n[section1]\nkey1 = value1`)
+	dump(t, "Preamble2", "\n\t\n[section1]\nkey1 = value1")
 }
 
 // Comment Preamble
