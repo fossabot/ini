@@ -19,12 +19,12 @@ type Lexer struct {
 	pos, runes uint
 
 	nextState LexerStateFn
-	tokens    chan token.Token
+	tokens    chan *token.Token
 }
 
 type LexerStateFn func(*Lexer) LexerStateFn
 
-func NewLexer(name string, input string) (*Lexer, chan token.Token) {
+func NewLexer(name string, input string) (*Lexer, chan *token.Token) {
 	l := &Lexer{
 		name:  name,
 		input: input,
@@ -33,7 +33,7 @@ func NewLexer(name string, input string) (*Lexer, chan token.Token) {
 		col:  1,
 
 		nextState: lineLexer,
-		tokens:    make(chan token.Token),
+		tokens:    make(chan *token.Token),
 	}
 	return l, l.tokens
 }
@@ -58,13 +58,15 @@ func (l *Lexer) emitBackNotEmpty(runes, bytes uint, typ token.TokenType) {
 	}
 }
 func (l *Lexer) emitBack(runes, bytes uint, typ token.TokenType) {
-	l.tokens <- token.Token{typ, l.input[l.start : l.pos-bytes], l.name, l.line, l.col}
+	t := &token.Token{typ, l.input[l.start : l.pos-bytes], l.name, l.line, l.col}
+	l.tokens <- t
 
 	l.start = l.pos - bytes
 	l.col += l.runes - runes
 }
 func (l *Lexer) emit(typ token.TokenType) {
-	l.tokens <- token.Token{typ, l.input[l.start:l.pos], l.name, l.line, l.col}
+	t := &token.Token{typ, l.input[l.start:l.pos], l.name, l.line, l.col}
+	l.tokens <- t
 
 	l.start = l.pos
 	l.col += l.runes
