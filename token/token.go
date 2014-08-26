@@ -21,7 +21,7 @@ func (t *Token) String() string {
 		return fmt.Sprintf("%s: %s", s, t.Typ)
 	default:
 		if len(t.Val) > 10 {
-			return fmt.Sprintf("%s: %s:.10%q... (%v)", s, t.Typ, t.Val, len(t.Val))
+			return fmt.Sprintf("%s: %s:%.10q... (%v)", s, t.Typ, t.Val, len(t.Val))
 		} else {
 			return fmt.Sprintf("%s: %s:%q (%v)", s, t.Typ, t.Val, len(t.Val))
 		}
