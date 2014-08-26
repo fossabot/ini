@@ -9,7 +9,7 @@ const (
 	TokenComment                         // ; comment
 	TokenKey                             // key = value
 	TokenValue                           // key = value
-	TokenRaw                             // some content
+	TokenText                            // some content
 	TokenEOL                             // \r\n or \n
 	TokenError
 	TokenEOF
@@ -28,8 +28,8 @@ func (typ TokenType) String() string {
 		return "KEY"
 	case TokenValue:
 		return "VAL"
-	case TokenRaw:
-		return "RAW"
+	case TokenText:
+		return "TEXT"
 	case TokenEOL:
 		return "EOL"
 	case TokenError:

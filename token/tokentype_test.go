@@ -18,7 +18,7 @@ func TestTokenTypeToString(t *testing.T) {
 		{TokenComment, "COM"},
 		{TokenKey, "KEY"},
 		{TokenValue, "VAL"},
-		{TokenRaw, "RAW"},
+		{TokenText, "TEXT"},
 		{TokenEOL, "EOL"},
 		{TokenError, "ERROR"},
 		{TokenEOF, "EOF"},
