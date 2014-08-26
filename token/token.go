@@ -14,16 +14,21 @@ type Token struct {
 }
 
 func (t *Token) String() string {
-	s := fmt.Sprintf("%s:%v:%v", t.Name, t.Line, t.Col)
+	var s string
+	if len(t.Name) > 0 {
+		s = fmt.Sprintf("%s:%v:%v", t.Name, t.Line, t.Col)
+	} else {
+		s = fmt.Sprintf("%v:%v", t.Line, t.Col)
+	}
 
 	switch t.Typ {
 	case TokenEOL, TokenEOF:
-		return fmt.Sprintf("%s: %s", s, t.Typ)
+		return fmt.Sprintf("%s:%s", s, t.Typ)
 	default:
 		if len(t.Val) > 10 {
-			return fmt.Sprintf("%s: %s:%.10q... (%v)", s, t.Typ, t.Val, len(t.Val))
+			return fmt.Sprintf("%s:%s:%.10q... (%v)", s, t.Typ, t.Val, len(t.Val))
 		} else {
-			return fmt.Sprintf("%s: %s:%q (%v)", s, t.Typ, t.Val, len(t.Val))
+			return fmt.Sprintf("%s:%s:%q (%v)", s, t.Typ, t.Val, len(t.Val))
 		}
 	}
 }
