@@ -7,12 +7,12 @@ import (
 )
 
 func dump(t *testing.T, name, data string) {
-	lex, _ := NewLexer(name, data)
+	lex, _ := NewLexer(name, data, 1024)
 
 loop:
 	for {
 		x := lex.NextToken()
-		fmt.Printf("token: %v\n", *x)
+		fmt.Printf("token: %v\n", x)
 		if x.Typ == token.TokenEOF {
 			break loop
 		}

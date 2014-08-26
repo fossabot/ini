@@ -24,7 +24,7 @@ type Lexer struct {
 
 type LexerStateFn func(*Lexer) LexerStateFn
 
-func NewLexer(name string, input string) (*Lexer, chan *token.Token) {
+func NewLexer(name string, input string, buf uint) (*Lexer, chan *token.Token) {
 	l := &Lexer{
 		name:  name,
 		input: input,
@@ -33,7 +33,7 @@ func NewLexer(name string, input string) (*Lexer, chan *token.Token) {
 		col:  1,
 
 		nextState: lineLexer,
-		tokens:    make(chan *token.Token),
+		tokens:    make(chan *token.Token, buf),
 	}
 	return l, l.tokens
 }
