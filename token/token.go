@@ -32,3 +32,10 @@ func (t *Token) String() string {
 		}
 	}
 }
+
+// Loc modified the Line and Col fields of the Token and returns the Token again
+// to be used from Tests
+func (t *Token) Loc(l, c uint) *Token {
+	t.Line, t.Col = l, c
+	return t
+}
