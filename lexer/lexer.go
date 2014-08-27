@@ -38,12 +38,15 @@ func NewLexer(name string, input string, buf uint) (*Lexer, chan *token.Token) {
 	return l, l.tokens
 }
 
+// Run is intended as the execution loop in a Goroutine
 func (l *Lexer) Run() {
 	for l.nextState != nil {
 		l.nextState = l.nextState(l)
 	}
 }
 
+// NextToken on the other hand consumes tokens and moves the loop
+// without the need of Goroutines
 func (l *Lexer) NextToken() *token.Token {
 	for {
 		select {
@@ -53,6 +56,11 @@ func (l *Lexer) NextToken() *token.Token {
 			l.nextState = l.nextState(l)
 		}
 	}
+}
+
+// Token generates a new token.Token with proper context
+func (l *Lexer) Token(typ token.TokenType, val string) *token.Token {
+	return &token.Token{typ, val, l.name, l.line, l.col}
 }
 
 // Emit Token
@@ -67,16 +75,16 @@ func (l *Lexer) emitBackNotEmpty(runes, bytes uint, typ token.TokenType) {
 		l.emitBack(runes, bytes, typ)
 	}
 }
+
 func (l *Lexer) emitBack(runes, bytes uint, typ token.TokenType) {
-	t := &token.Token{typ, l.input[l.start : l.pos-bytes], l.name, l.line, l.col}
-	l.tokens <- t
+	l.tokens <- l.Token(typ, l.input[l.start:l.pos-bytes])
 
 	l.start = l.pos - bytes
 	l.col += l.runes - runes
 }
+
 func (l *Lexer) emit(typ token.TokenType) {
-	t := &token.Token{typ, l.input[l.start:l.pos], l.name, l.line, l.col}
-	l.tokens <- t
+	l.tokens <- l.Token(typ, l.input[l.start:l.pos])
 
 	l.start = l.pos
 	l.col += l.runes
