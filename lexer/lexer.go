@@ -81,6 +81,7 @@ func (l *Lexer) emitBack(runes, bytes uint, typ token.TokenType) {
 
 	l.start = l.pos - bytes
 	l.col += l.runes - runes
+	l.runes = runes
 }
 
 func (l *Lexer) emit(typ token.TokenType) {
@@ -88,6 +89,7 @@ func (l *Lexer) emit(typ token.TokenType) {
 
 	l.start = l.pos
 	l.col += l.runes
+	l.runes = 0
 }
 
 func (l *Lexer) emitEOL() {
