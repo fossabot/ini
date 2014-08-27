@@ -105,10 +105,10 @@ func (l *Lexer) emitEOF() {
 
 // Helpers
 func (l *Lexer) empty() bool {
-	return l.start <= l.pos
+	return l.start == l.pos
 }
 func (l *Lexer) emptyBack(_, bytes uint) bool {
-	return (l.start + bytes) >= l.pos
+	return (l.start + bytes) == l.pos
 }
 
 func (l *Lexer) next() (rune, uint) {
