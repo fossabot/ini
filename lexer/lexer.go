@@ -2,6 +2,7 @@ package lexer
 
 import (
 	"asciigoat.org/ini/token"
+	"fmt"
 	"unicode/utf8"
 )
 
@@ -101,6 +102,18 @@ func (l *Lexer) emitEOL() {
 func (l *Lexer) emitEOF() {
 	l.emit(token.TokenEOF)
 	close(l.tokens)
+}
+
+func (l *Lexer) emitError(str string) {
+	var s string
+	s = l.input[l.start:l.pos]
+	s = fmt.Sprintf("%s: %q (%v)", str, s, len(s))
+
+	l.tokens <- l.Token(token.TokenError, s)
+
+	l.start = l.pos
+	l.col += l.runes
+	l.runes = 0
 }
 
 // Helpers

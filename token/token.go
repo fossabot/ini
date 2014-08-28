@@ -24,6 +24,8 @@ func (t *Token) String() string {
 	switch t.Typ {
 	case TokenEOL, TokenEOF:
 		return fmt.Sprintf("%s:%s", s, t.Typ)
+	case TokenError:
+		return fmt.Sprintf("%s:%s:%s", s, t.Typ, t.Val)
 	default:
 		if len(t.Val) > 10 {
 			return fmt.Sprintf("%s:%s:%.10q... (%v)", s, t.Typ, t.Val, len(t.Val))
