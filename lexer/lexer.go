@@ -145,3 +145,9 @@ func (l *Lexer) forth(runes, bytes uint) {
 	l.runes += runes
 	l.pos += bytes
 }
+
+func (l *Lexer) skip() {
+	l.start = l.pos
+	l.col += l.runes
+	l.runes = 0
+}
