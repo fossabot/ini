@@ -5,6 +5,12 @@ import (
 	"testing"
 )
 
+func newLexer(t *testing.T, str string) *Lexer {
+	t.Logf("data = %q", str)
+	l, _ := NewLexer("", str, 2)
+	return l
+}
+
 func cmp(t *testing.T, lex *Lexer, tokens []*token.Token) {
 	i := 0
 
@@ -35,14 +41,9 @@ func cmp(t *testing.T, lex *Lexer, tokens []*token.Token) {
 	}
 }
 
-const (
-	BUF = 2
-)
-
 // Really Empty
 func TestEmpty1(t *testing.T) {
-	data := ""
-	l, _ := NewLexer("", data, BUF)
+	l := newLexer(t, "")
 	tokens := []*token.Token{
 		l.Token(token.TokenEOF, "").Loc(1, 1),
 	}
@@ -52,8 +53,7 @@ func TestEmpty1(t *testing.T) {
 
 // Whitespace Empty
 func TestEmpty2(t *testing.T) {
-	data := "\n"
-	l, _ := NewLexer("", data, BUF)
+	l := newLexer(t, "\n")
 	tokens := []*token.Token{
 		l.Token(token.TokenEOL, "\n").Loc(1, 1),
 		l.Token(token.TokenEOF, "").Loc(2, 1),
@@ -64,8 +64,7 @@ func TestEmpty2(t *testing.T) {
 
 // Whitespace Empty
 func TestEmpty3(t *testing.T) {
-	data := "   \n"
-	l, _ := NewLexer("", data, BUF)
+	l := newLexer(t, "   \n")
 	tokens := []*token.Token{
 		l.Token(token.TokenEOL, "\n").Loc(1, 4),
 		l.Token(token.TokenEOF, "").Loc(2, 1),
@@ -76,8 +75,7 @@ func TestEmpty3(t *testing.T) {
 
 // Whitespace Empty
 func TestEmpty4(t *testing.T) {
-	data := "   \n\t "
-	l, _ := NewLexer("", data, BUF)
+	l := newLexer(t, "   \n\t ")
 	tokens := []*token.Token{
 		l.Token(token.TokenEOL, "\n").Loc(1, 4),
 		l.Token(token.TokenEOF, "").Loc(2, 3),
@@ -88,8 +86,7 @@ func TestEmpty4(t *testing.T) {
 
 // Empty Preamble
 func TestPreamble1(t *testing.T) {
-	data := "[section1]\nkey1 = value1\n"
-	l, _ := NewLexer("", data, BUF)
+	l := newLexer(t, "[section1]\nkey1 = value1\n")
 	tokens := []*token.Token{
 		l.Token(token.TokenText, "[section1]").Loc(1, 1),
 		l.Token(token.TokenEOL, "\n").Loc(1, 11),
@@ -103,8 +100,7 @@ func TestPreamble1(t *testing.T) {
 
 // Whitespace Preamble
 func TestPreamble2(t *testing.T) {
-	data := "\n\t\n[section1]\nkey1 = value1"
-	l, _ := NewLexer("", data, BUF)
+	l := newLexer(t, "\n\t\n[section1]\nkey1 = value1")
 	tokens := []*token.Token{
 		l.Token(token.TokenEOL, "\n").Loc(1, 1),
 		l.Token(token.TokenEOL, "\n").Loc(2, 2),
@@ -119,14 +115,13 @@ func TestPreamble2(t *testing.T) {
 
 // Comment Preamble
 func TestPreamble3(t *testing.T) {
-	data := `
+	l := newLexer(t, `
 ; comment 1
 ; comment 2
 
 [section1]
 key1 = value1
-`
-	l, _ := NewLexer("", data, BUF)
+`)
 	tokens := []*token.Token{
 		l.Token(token.TokenEOL, "\n").Loc(1, 1),
 		l.Token(token.TokenComment, "; comment 1").Loc(2, 1),
