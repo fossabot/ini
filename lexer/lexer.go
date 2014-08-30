@@ -33,7 +33,7 @@ func NewLexer(name string, input string, buf uint) (*Lexer, chan *token.Token) {
 		line: 1,
 		col:  1,
 
-		nextState: lineLexer,
+		nextState: preambleLexer,
 		tokens:    make(chan *token.Token, buf),
 	}
 	return l, l.tokens

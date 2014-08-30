@@ -17,13 +17,13 @@ func cmp(t *testing.T, lex *Lexer, tokens []*token.Token) {
 		}
 		i = i + 1
 
-		if y == nil || *x != *y {
+		if x == nil || y == nil || *x != *y {
 			t.Errorf("token[%v] failed: %v != %v", i, x, y)
 		} else {
 			t.Logf("token[%v] %v", i, x)
 		}
 
-		if x.Typ == token.TokenEOF {
+		if x == nil || x.Typ == token.TokenEOF {
 			x = nil
 			for j := i; j < len(tokens); {
 				y = tokens[j]
@@ -67,7 +67,6 @@ func TestEmpty3(t *testing.T) {
 	data := "   \n"
 	l, _ := NewLexer("", data, BUF)
 	tokens := []*token.Token{
-		l.Token(token.TokenText, "   ").Loc(1, 1),
 		l.Token(token.TokenEOL, "\n").Loc(1, 4),
 		l.Token(token.TokenEOF, "").Loc(2, 1),
 	}
@@ -80,9 +79,7 @@ func TestEmpty4(t *testing.T) {
 	data := "   \n\t "
 	l, _ := NewLexer("", data, BUF)
 	tokens := []*token.Token{
-		l.Token(token.TokenText, "   ").Loc(1, 1),
 		l.Token(token.TokenEOL, "\n").Loc(1, 4),
-		l.Token(token.TokenText, "\t ").Loc(2, 1),
 		l.Token(token.TokenEOF, "").Loc(2, 3),
 	}
 
@@ -110,7 +107,6 @@ func TestPreamble2(t *testing.T) {
 	l, _ := NewLexer("", data, BUF)
 	tokens := []*token.Token{
 		l.Token(token.TokenEOL, "\n").Loc(1, 1),
-		l.Token(token.TokenText, "\t").Loc(2, 1),
 		l.Token(token.TokenEOL, "\n").Loc(2, 2),
 		l.Token(token.TokenText, "[section1]").Loc(3, 1),
 		l.Token(token.TokenEOL, "\n").Loc(3, 11),
@@ -133,9 +129,9 @@ key1 = value1
 	l, _ := NewLexer("", data, BUF)
 	tokens := []*token.Token{
 		l.Token(token.TokenEOL, "\n").Loc(1, 1),
-		l.Token(token.TokenText, "; comment 1").Loc(2, 1),
+		l.Token(token.TokenComment, "; comment 1").Loc(2, 1),
 		l.Token(token.TokenEOL, "\n").Loc(2, 12),
-		l.Token(token.TokenText, "; comment 2").Loc(3, 1),
+		l.Token(token.TokenComment, "; comment 2").Loc(3, 1),
 		l.Token(token.TokenEOL, "\n").Loc(3, 12),
 		l.Token(token.TokenEOL, "\n").Loc(4, 1),
 		l.Token(token.TokenText, "[section1]").Loc(5, 1),
