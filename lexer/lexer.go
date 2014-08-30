@@ -54,7 +54,11 @@ func (l *Lexer) NextToken() *token.Token {
 		case t := <-l.tokens:
 			return t
 		default:
-			l.nextState = l.nextState(l)
+			if l.nextState != nil {
+				l.nextState = l.nextState(l)
+			} else {
+				return nil
+			}
 		}
 	}
 }
