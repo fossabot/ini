@@ -24,8 +24,7 @@ loop:
 			l.back(1, l1)
 			break loop
 		case '[':
-			l.back(1, l0)
-			return lineLexer
+			return sectionLexer
 		case ';', '#':
 			l.back(1, l0)
 			return earlyCommentLexer

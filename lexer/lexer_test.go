@@ -88,7 +88,7 @@ func TestEmpty4(t *testing.T) {
 func TestPreamble1(t *testing.T) {
 	l := newLexer(t, "[section1]\nkey1 = value1\n")
 	tokens := []*token.Token{
-		l.Token(token.TokenText, "[section1]").Loc(1, 1),
+		l.Token(token.TokenSection, "section1").Loc(1, 1),
 		l.Token(token.TokenEOL, "\n").Loc(1, 11),
 		l.Token(token.TokenText, "key1 = value1").Loc(2, 1),
 		l.Token(token.TokenEOL, "\n").Loc(2, 14),
@@ -104,7 +104,7 @@ func TestPreamble2(t *testing.T) {
 	tokens := []*token.Token{
 		l.Token(token.TokenEOL, "\n").Loc(1, 1),
 		l.Token(token.TokenEOL, "\n").Loc(2, 2),
-		l.Token(token.TokenText, "[section1]").Loc(3, 1),
+		l.Token(token.TokenSection, "section1").Loc(3, 1),
 		l.Token(token.TokenEOL, "\n").Loc(3, 11),
 		l.Token(token.TokenText, "key1 = value1").Loc(4, 1),
 		l.Token(token.TokenEOF, "").Loc(4, 14),
@@ -129,7 +129,7 @@ key1 = value1
 		l.Token(token.TokenComment, "; comment 2").Loc(3, 1),
 		l.Token(token.TokenEOL, "\n").Loc(3, 12),
 		l.Token(token.TokenEOL, "\n").Loc(4, 1),
-		l.Token(token.TokenText, "[section1]").Loc(5, 1),
+		l.Token(token.TokenSection, "section1").Loc(5, 1),
 		l.Token(token.TokenEOL, "\n").Loc(5, 11),
 		l.Token(token.TokenText, "key1 = value1").Loc(6, 1),
 		l.Token(token.TokenEOL, "\n").Loc(6, 14),
