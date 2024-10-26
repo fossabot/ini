@@ -1,4 +1,10 @@
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fasciigoat%2Fini.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fasciigoat%2Fini?ref=badge_shield)
+
 asciigoat.org/ini
 =================
 
 ++.ini++-style documents parser
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fasciigoat%2Fini.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fasciigoat%2Fini?ref=badge_large)
